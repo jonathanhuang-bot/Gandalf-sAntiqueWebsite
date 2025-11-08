@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Antiques Shop" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <header style="background-color: #f8f9fa; padding: 20px; border-bottom: 2px solid #dee2e6; margin-bottom: 20px;">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <h1 style="margin: 0; display: inline-block;">
+          <%= link_to "Antique Shop", "/", style: "text-decoration: none; color: #333;" %>
+        </h1>
+        
+        <nav style="float: right; margin-top: 5px;">
+          <%= link_to "Categories", "/categories", style: "margin-right: 20px; color: #007bff; text-decoration: none;" %>
+          <%= link_to "All Items", "/items", style: "color: #007bff; text-decoration: none;" %>
+        </nav>
+        <div style="clear: both;"></div>
+      </div>
+    </header>
+    <%= yield %>
+  </body>
+</html>

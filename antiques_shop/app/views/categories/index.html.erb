@@ -1,0 +1,63 @@
+<!-- Main Header -->
+<header class="main-header">
+  <div class="header-container">
+    <div class="nav-menu">
+      <!-- Categories Dropdown -->
+      <div class="dropdown">
+        <button class="nav-button">Categories ▼</button>
+        <div class="dropdown-content">
+          <a href="#" class="dropdown-item">Furniture</a>
+          <a href="#" class="dropdown-item">Jewelry</a>
+          <a href="#" class="dropdown-item">Books</a>
+          <a href="#" class="dropdown-item">Art</a>
+        </div>
+      </div>
+
+      <!-- Other Navigation -->
+      <button class="nav-button">About</button>
+      <button class="nav-button">News</button>
+      <button class="nav-button">Contact</button>
+    </div>
+
+    <div class="nav-menu">
+      <!-- Right side buttons -->
+      <button class="nav-button">🌐 EN/JP</button>
+      <button class="nav-button">📸 Instagram</button>
+      <button class="nav-button">🔍 Search</button>
+      <button class="nav-button">🛒 Cart</button>
+    </div>
+  </div>
+</header>
+
+<!-- Logo Section -->
+<section class="logo-section">
+  <%= image_tag "GandalfAntiqueShopLogo.JPG", alt: "Antique Treasures", class:
+"logo-image" %>
+  <p class="tagline">Discover History, Own Beauty</p>
+</section>
+
+<!-- Items Grid -->
+<section class="items-container">
+  <div class="items-grid">
+    <% @categories.each do |category| %>
+      <% category.items.limit(6).each do |item| %>
+        <div class="item-card">
+          <div class="item-image">
+            <% if item.image.attached? %>
+              <%= image_tag item.image, style: "width: 100%; height: 250px; object-fit: cover;" %>
+            <% else %>
+              <span>No Image Available</span>
+            <% end %>
+          </div>
+          <div class="item-info">
+            <h3 class="item-name">
+              <%= link_to item.name, "/items/" + item.id.to_s %>
+            </h3>
+            <p class="item-price">$<%= item.price %></p>
+            <p class="item-category"><%= item.category.name %></p>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</section>

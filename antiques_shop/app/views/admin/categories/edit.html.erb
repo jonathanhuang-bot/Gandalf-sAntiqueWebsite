@@ -1,0 +1,40 @@
+<h1>Edit Category</h1>
+
+<%= form_with(model: [:admin, @category], local: true) do |form| %>
+<% if @category.errors.any? %>
+    <div style="color: red; background: #ffe6e6; padding: 15px;
+margin-bottom: 20px; border: 1px solid red;">
+    <h4><%= pluralize(@category.errors.count, "error") %> prohibited
+this category from being saved:</h4>
+    <ul>
+        <% @category.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+        <% end %>
+    </ul>
+    </div>
+<% end %>
+
+<div style="margin-bottom: 15px;">
+    <%= form.label :name, style: "display: block; font-weight: bold;
+margin-bottom: 5px;" %>
+    <%= form.text_field :name, style: "width: 100%; padding: 8px; border:
+1px solid #ccc;" %>
+</div>
+
+<div style="margin-bottom: 15px;">
+    <%= form.label :description, style: "display: block; font-weight:
+bold; margin-bottom: 5px;" %>
+    <%= form.text_area :description, rows: 4, style: "width: 100%;
+padding: 8px; border: 1px solid #ccc;" %>
+</div>
+
+<div style="margin-top: 20px;">
+    <%= form.submit "Update Category", style: "background-color: #007bff;
+color: white; padding: 10px 20px; border: none; border-radius: 5px;
+cursor: pointer;" %>
+    <%= link_to "Show", admin_category_path(@category), style:
+"margin-left: 10px; color: #6c757d;" %>
+    <%= link_to "Back", admin_categories_path, style: "margin-left: 10px;
+color: #6c757d;" %>
+</div>
+<% end %>

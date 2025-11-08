@@ -1,0 +1,47 @@
+<h1>Admin - Manage Items</h1>
+
+<div style="margin-bottom: 20px;">
+<%= link_to "Add New Item", new_admin_item_path, style:
+"background-color: #28a745; color: white; padding: 10px 20px;
+text-decoration: none; border-radius: 5px;" %>
+</div>
+
+<table style="width: 100%; border-collapse: collapse;">
+<thead>
+    <tr style="background-color: #f8f9fa;">
+    <th style="border: 1px solid #ddd; padding: 12px; text-align:
+left;">Name</th>
+    <th style="border: 1px solid #ddd; padding: 12px; text-align:
+left;">Category</th>
+    <th style="border: 1px solid #ddd; padding: 12px; text-align:
+left;">Price</th>
+    <th style="border: 1px solid #ddd; padding: 12px; text-align:
+left;">Condition</th>
+    <th style="border: 1px solid #ddd; padding: 12px; text-align:
+left;">Actions</th>
+    </tr>
+</thead>
+<tbody>
+    <% @items.each do |item| %>
+    <tr>
+        <td style="border: 1px solid #ddd; padding: 12px;"><%= item.name
+%></td>
+        <td style="border: 1px solid #ddd; padding: 12px;"><%=
+item.category.name %></td>
+        <td style="border: 1px solid #ddd; padding: 12px;">$<%=
+item.price %></td>
+        <td style="border: 1px solid #ddd; padding: 12px;"><%=
+item.condition %></td>
+        <td style="border: 1px solid #ddd; padding: 12px;">
+        <%= link_to "View", admin_item_path(item), style: "color:
+#007bff; margin-right: 10px;" %>
+        <%= link_to "Edit", edit_admin_item_path(item), style: "color:
+#ffc107; margin-right: 10px;" %>
+        <%= link_to "Delete", admin_item_path(item), data: {"turbo-method": :delete,
+                    "turbo-confirm": "Are you sure?"}, style: "color: #dc3545;"
+%>
+        </td>
+    </tr>
+    <% end %>
+</tbody>
+</table>

@@ -1,0 +1,12 @@
+<h1><%= @item.name %></h1>
+
+<div style="border: 1px solid #ccc; padding: 20px;">
+    <p><strong>Price:</strong> $<%= @item.price %></p>
+    <p><strong>Category:</strong> <%= link_to @item.category.name,
+    "/categories/#{@item.category.id}" %></p>
+    <p><strong>Condition:</strong> <%= @item.condition %></p>
+    <p><strong>Year Made:</strong> <%= @item.year_made %></p>
+    <p><strong>Description:</strong> <%= @item.description %></p>
+</div>
+
+<p><%= link_to "Back to all items", "/items" %></p>

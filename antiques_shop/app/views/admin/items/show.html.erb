@@ -1,0 +1,19 @@
+<h1><%= @item.name %></h1>
+
+<div style="background: #f8f9fa; padding: 20px; border: 1px solid
+#dee2e6; border-radius: 5px;">
+    <p><strong>Description:</strong> <%= @item.description %></p>
+    <p><strong>Price:</strong> $<%= @item.price %></p>
+    <p><strong>Category:</strong> <%= @item.category.name %></p>
+    <p><strong>Condition:</strong> <%= @item.condition %></p>
+    <p><strong>Year Made:</strong> <%= @item.year_made %></p>
+    <p><strong>Image URL:</strong> <%= @item.image_url %></p>
+</div>
+
+<div style="margin-top: 20px;">
+    <%= link_to "Edit", edit_admin_item_path(@item), style:
+    "background-color: #ffc107; color: black; padding: 10px 20px;
+    text-decoration: none; border-radius: 5px; margin-right: 10px;" %>
+    <%= link_to "Back to Items", admin_items_path, style: "color: #6c757d;"
+    %>
+</div>

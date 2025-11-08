@@ -1,0 +1,11 @@
+<h1>All Antique Items</h1>
+<% @items.each do |item| %>
+    <div style="border: 1px solid #ccc; padding: 20px; margin: 10px 0;">
+        <h3><%=link_to item.name, "/items/#{item.id}" %></h3>
+        <p><strong>Price:</strong> $<%=item.price %></p>
+        <p><strong>Category:</strong> <%= item.category.name %></p>
+        <p><strong>Condition:</strong> <%= item.condition %></p>
+        <p><strong>Year Made:</strong> <%= item.year_made %></p>
+        <p><%= item.description %></p>
+    </div>
+<% end %>
