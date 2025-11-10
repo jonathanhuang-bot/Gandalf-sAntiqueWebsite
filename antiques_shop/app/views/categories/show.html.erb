@@ -1,11 +1,75 @@
-<h1><%= @category.name %></h1>
-<p><%= @category.description %></p>
-
-<h2>Items in this category:</h2>
-<% @category.items.each do |item| %>
-    <div style="border: 1px solid #ccc; padding: 15px; margin: 10px 0;">
-        <h4><%= link_to item.name, "/items/#{item.id}" %></h4>
-        <p><strong>Price:</strong> $<%= item.price %></p>
-        <p><%= item.description %></p>
+<!-- Main Header -->
+<header class="main-header">
+  <div class="header-container">
+    <div class="nav-menu">
+      <!-- Left side navigation -->
+      <div class="dropdown">
+        <a href="/categories" class="nav-link dropdown-trigger">Shop</a>
+        <div class="dropdown-content">
+          <% Category.all.each do |category| %>
+            <%= link_to category.name, category_path(category), class: "dropdown-item" %>
+          <% end %>
+        </div>
+      </div>
+      <a href="#" class="nav-link">About</a>
+      <a href="#" class="nav-link">Contact</a>
     </div>
-<% end %>
+
+    <div class="nav-menu">
+      <!-- Right side navigation -->
+      <%= form_with(url: categories_path, method: :get, class: "search-form") do |f| %>
+        <%= f.text_field :search, placeholder: "Search items...", class: "search-input" %>
+        <%= f.submit "Search", class: "search-button" %>
+      <% end %>
+      <a href="#" class="nav-link">Cart</a>
+    </div>
+  </div>
+</header>
+
+<!-- Logo Section -->
+<section class="logo-section">
+  <%= image_tag "GandalfAntiqueShopLogo.JPG", alt: "Antique Treasures", class: "logo-image" %>
+</section>
+
+<!-- Category Header -->
+<section class="category-header">
+  <div class="items-container">
+    <h1 class="category-title"><%= @category.name %></h1>
+    <% if @category.description.present? %>
+      <p class="category-description"><%= @category.description %></p>
+    <% end %>
+    <p class="category-item-count"><%= pluralize(@items.count, 'item') %></p>
+    <%= link_to "← Back to all items", categories_path, class: "back-link" %>
+  </div>
+</section>
+
+<!-- Items Grid -->
+<section class="items-container">
+  <% if @items.any? %>
+    <div class="items-grid">
+      <% @items.each do |item| %>
+        <div class="item-card">
+          <div class="item-image">
+            <% if item.image.attached? %>
+              <%= image_tag item.image, style: "width: 100%; height: 250px; object-fit: cover;" %>
+            <% else %>
+              <span>No Image Available</span>
+            <% end %>
+          </div>
+          <div class="item-info">
+            <h3 class="item-name">
+              <%= link_to item.name, item_path(item) %>
+            </h3>
+            <p class="item-price">$<%= item.price %></p>
+            <p class="item-category"><%= item.category.name %></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="no-results">
+      <p>No items in this category yet.</p>
+      <%= link_to "View all items", categories_path, class: "clear-search-link" %>
+    </div>
+  <% end %>
+</section>

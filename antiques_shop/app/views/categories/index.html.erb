@@ -2,45 +2,50 @@
 <header class="main-header">
   <div class="header-container">
     <div class="nav-menu">
-      <!-- Categories Dropdown -->
+      <!-- Left side navigation -->
       <div class="dropdown">
-        <button class="nav-button">Categories ▼</button>
+        <a href="/categories" class="nav-link dropdown-trigger">Shop</a>
         <div class="dropdown-content">
-          <a href="#" class="dropdown-item">Furniture</a>
-          <a href="#" class="dropdown-item">Jewelry</a>
-          <a href="#" class="dropdown-item">Books</a>
-          <a href="#" class="dropdown-item">Art</a>
+          <% @categories.each do |category| %>
+            <%= link_to category.name, category_path(category), class: "dropdown-item" %>
+          <% end %>
         </div>
       </div>
-
-      <!-- Other Navigation -->
-      <button class="nav-button">About</button>
-      <button class="nav-button">News</button>
-      <button class="nav-button">Contact</button>
+      <a href="#" class="nav-link">About</a>
+      <a href="#" class="nav-link">Contact</a>
     </div>
 
     <div class="nav-menu">
-      <!-- Right side buttons -->
-      <button class="nav-button">🌐 EN/JP</button>
-      <button class="nav-button">📸 Instagram</button>
-      <button class="nav-button">🔍 Search</button>
-      <button class="nav-button">🛒 Cart</button>
+      <!-- Right side navigation -->
+      <%= form_with(url: categories_path, method: :get, class: "search-form") do |f| %>
+        <%= f.text_field :search, placeholder: "Search items...", class: "search-input", value: @search_query %>
+        <%= f.submit "Search", class: "search-button" %>
+      <% end %>
+      <a href="#" class="nav-link">Cart</a>
     </div>
   </div>
 </header>
 
-<!-- Logo Section -->
-<section class="logo-section">
-  <%= image_tag "GandalfAntiqueShopLogo.JPG", alt: "Antique Treasures", class:
-"logo-image" %>
-  <p class="tagline">Discover History, Own Beauty</p>
-</section>
+<% unless @search_query.present? %>
+  <!-- Logo Section -->
+  <section class="logo-section">
+    <%= image_tag "GandalfAntiqueShopLogo.JPG", alt: "Antique Treasures", class: "logo-image" %>
+  </section>
+<% end %>
 
 <!-- Items Grid -->
 <section class="items-container">
-  <div class="items-grid">
-    <% @categories.each do |category| %>
-      <% category.items.limit(6).each do |item| %>
+  <% if @search_query.present? %>
+    <div class="search-results-header">
+      <h2>Search results for "<%= @search_query %>"</h2>
+      <p><%= pluralize(@items.count, 'item') %> found</p>
+      <%= link_to "Clear search", categories_path, class: "clear-search-link" %>
+    </div>
+  <% end %>
+
+  <% if @items.any? %>
+    <div class="items-grid">
+      <% @items.each do |item| %>
         <div class="item-card">
           <div class="item-image">
             <% if item.image.attached? %>
@@ -58,6 +63,11 @@
           </div>
         </div>
       <% end %>
-    <% end %>
-  </div>
+    </div>
+  <% else %>
+    <div class="no-results">
+      <p>No items found matching your search.</p>
+      <%= link_to "View all items", categories_path, class: "clear-search-link" %>
+    </div>
+  <% end %>
 </section>

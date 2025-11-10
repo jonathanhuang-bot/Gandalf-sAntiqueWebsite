@@ -1,12 +1,47 @@
-<h1><%= @item.name %></h1>
+<div class="product-page">
+  <div class="product-container">
+    <!-- Left Column: Product Image -->
+    <div class="product-image-section">
+      <% if @item.image.attached? %>
+        <%= image_tag @item.image, alt: @item.name, class: "product-image" %>
+      <% else %>
+        <div class="product-image-placeholder">
+          <span>No Image Available</span>
+        </div>
+      <% end %>
+    </div>
 
-<div style="border: 1px solid #ccc; padding: 20px;">
-    <p><strong>Price:</strong> $<%= @item.price %></p>
-    <p><strong>Category:</strong> <%= link_to @item.category.name,
-    "/categories/#{@item.category.id}" %></p>
-    <p><strong>Condition:</strong> <%= @item.condition %></p>
-    <p><strong>Year Made:</strong> <%= @item.year_made %></p>
-    <p><strong>Description:</strong> <%= @item.description %></p>
+    <!-- Right Column: Product Information -->
+    <div class="product-info-section">
+      <h1 class="product-title"><%= @item.name %></h1>
+
+      <p class="product-price">$<%= number_with_precision(@item.price, precision: 2) %></p>
+
+      <div class="product-details">
+        <div class="detail-row">
+          <span class="detail-label">Category</span>
+          <span class="detail-value"><%= link_to @item.category.name, "/categories/#{@item.category.id}", class: "category-link" %></span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Condition</span>
+          <span class="detail-value"><%= @item.condition %></span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Year Made</span>
+          <span class="detail-value"><%= @item.year_made %></span>
+        </div>
+      </div>
+
+      <div class="product-description">
+        <h3 class="description-title">Description</h3>
+        <p class="description-text"><%= @item.description %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="back-link-container">
+    <%= link_to "← Back to Shop", "/categories", class: "back-link" %>
+  </div>
 </div>
-
-<p><%= link_to "Back to all items", "/items" %></p>

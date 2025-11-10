@@ -1,87 +1,91 @@
-<h1>Edit Item</h1>
-
-<%= form_with(model: [:admin, @item], local: true) do |form| %>
-<% if @item.errors.any? %>
-    <div style="color: red; background: #ffe6e6; padding: 15px;
-margin-bottom: 20px; border: 1px solid red;">
-    <h4><%= pluralize(@item.errors.count, "error") %> prohibited this
-item from being saved:</h4>
-    <ul>
-        <% @item.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-        <% end %>
-    </ul>
+<div class="admin-page">
+  <div class="admin-header">
+    <h1 class="admin-title">Edit Item</h1>
+    <div class="admin-nav">
+      <%= link_to "← Back to Items", admin_items_path, class: "admin-nav-link" %>
     </div>
-<% end %>
+  </div>
 
-<div style="margin-bottom: 15px;">
-    <%= form.label :name, style: "display: block; font-weight: bold;
-margin-bottom: 5px;" %>
-    <%= form.text_field :name, style: "width: 100%; padding: 8px; border:
-1px solid #ccc;" %>
-</div>
+  <div class="admin-form-container">
+    <%= form_with(model: [:admin, @item], local: true, class: "admin-form") do |form| %>
+      <% if @item.errors.any? %>
+        <div class="form-errors">
+          <h4><%= pluralize(@item.errors.count, "error") %> prevented this item from being saved:</h4>
+          <ul>
+            <% @item.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-<div style="margin-bottom: 15px;">
-    <%= form.label :description, style: "display: block; font-weight:
-bold; margin-bottom: 5px;" %>
-    <%= form.text_area :description, rows: 4, style: "width: 100%;
-padding: 8px; border: 1px solid #ccc;" %>
-</div>
+      <div class="form-group">
+        <%= form.label :name, "Item Name", class: "form-label" %>
+        <%= form.text_field :name, class: "form-input", placeholder: "e.g., Victorian Oak Writing Desk" %>
+      </div>
 
-<div style="margin-bottom: 15px;">
-    <%= form.label :price, style: "display: block; font-weight: bold;
-margin-bottom: 5px;" %>
-    <%= form.number_field :price, step: 0.01, style: "width: 100%;
-padding: 8px; border: 1px solid #ccc;" %>
-</div>
+      <div class="form-group">
+        <%= form.label :description, class: "form-label" %>
+        <%= form.text_area :description, rows: 5, class: "form-textarea", placeholder: "Describe the item's history, condition, and unique features..." %>
+      </div>
 
-<div style="margin-bottom: 15px;">
-    <%= form.label :category_id, "Category", style: "display: block;
-font-weight: bold; margin-bottom: 5px;" %>
-    <%= form.select :category_id,
-options_from_collection_for_select(Category.all, :id, :name,
-@item.category_id),
-                    { prompt: "Select a category" },
-                    { style: "width: 100%; padding: 8px; border: 1px
-solid #ccc;" } %>
-</div>
+      <div class="form-row">
+        <div class="form-group">
+          <%= form.label :price, class: "form-label" %>
+          <%= form.number_field :price, step: 0.01, class: "form-input", placeholder: "0.00" %>
+        </div>
 
-<div style="margin-bottom: 15px;">
-    <%= form.label :condition, style: "display: block; font-weight: bold;
-margin-bottom: 5px;" %>
-    <%= form.select :condition,
-                    options_for_select([
-                    ["Excellent", "Excellent"],
-                    ["Good", "Good"],
-                    ["Fair", "Fair"],
-                    ["Poor", "Poor"]
-                    ], @item.condition),
-                    { prompt: "Select condition" },
-                    { style: "width: 100%; padding: 8px; border: 1px
-solid #ccc;" } %>
-</div>
+        <div class="form-group">
+          <%= form.label :year_made, "Year Made", class: "form-label" %>
+          <%= form.number_field :year_made, class: "form-input", placeholder: "e.g., 1890" %>
+        </div>
+      </div>
 
-<div style="margin-bottom: 15px;">
-    <%= form.label :year_made, style: "display: block; font-weight: bold;
-margin-bottom: 5px;" %>
-    <%= form.number_field :year_made, style: "width: 100%; padding: 8px;
-border: 1px solid #ccc;" %>
-</div>
+      <div class="form-group">
+        <%= form.label :position, "Display Order", class: "form-label" %>
+        <%= form.number_field :position, class: "form-input", placeholder: "1, 2, 3... (lower numbers appear first)" %>
+        <p class="form-hint">Items are displayed in ascending order by this number (1 appears before 2, etc.)</p>
+      </div>
 
-<div style="margin-bottom: 15px;">
-    <%= form.label :image_url, style: "display: block; font-weight: bold;
-margin-bottom: 5px;" %>
-    <%= form.file_field :image, style: "width: 100%; padding: 8px;
-border: 1px solid #ccc;" %>
-</div>
+      <div class="form-row">
+        <div class="form-group">
+          <%= form.label :category_id, "Category", class: "form-label" %>
+          <%= form.select :category_id,
+              options_from_collection_for_select(Category.all, :id, :name, @item.category_id),
+              { prompt: "Select a category" },
+              { class: "form-select" } %>
+        </div>
 
-<div style="margin-top: 20px;">
-    <%= form.submit "Update Item", style: "background-color: #007bff;
-color: white; padding: 10px 20px; border: none; border-radius: 5px;
-cursor: pointer;" %>
-    <%= link_to "Show", admin_item_path(@item), style: "margin-left:
-10px; color: #6c757d;" %>
-    <%= link_to "Back", admin_items_path, style: "margin-left: 10px;
-color: #6c757d;" %>
+        <div class="form-group">
+          <%= form.label :condition, class: "form-label" %>
+          <%= form.select :condition,
+              options_for_select([
+                ["Excellent", "Excellent"],
+                ["Good", "Good"],
+                ["Fair", "Fair"],
+                ["Poor", "Poor"]
+              ], @item.condition),
+              { prompt: "Select condition" },
+              { class: "form-select" } %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :image, "Product Image", class: "form-label" %>
+        <% if @item.image.attached? %>
+          <div class="current-image">
+            <%= image_tag @item.image, class: "form-preview-image" %>
+            <p class="form-hint">Current image (upload a new one to replace)</p>
+          </div>
+        <% end %>
+        <%= form.file_field :image, class: "form-file", accept: "image/*" %>
+        <p class="form-hint">Upload a high-quality image (JPG, PNG, or WEBP recommended)</p>
+      </div>
+
+      <div class="form-actions">
+        <%= form.submit "Update Item", class: "admin-btn-primary" %>
+        <%= link_to "Cancel", admin_items_path, class: "admin-btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
 </div>
-<% end %>

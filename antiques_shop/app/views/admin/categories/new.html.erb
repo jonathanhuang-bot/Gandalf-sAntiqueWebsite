@@ -1,38 +1,38 @@
-<h1>Add New Category</h1>
-
-<%= form_with(model: [:admin, @category], local: true) do |form| %>
-<% if @category.errors.any? %>
-    <div style="color: red; background: #ffe6e6; padding: 15px;
-margin-bottom: 20px; border: 1px solid red;">
-    <h4><%= pluralize(@category.errors.count, "error") %> prohibited
-this category from being saved:</h4>
-    <ul>
-        <% @category.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-        <% end %>
-    </ul>
+<div class="admin-page">
+  <div class="admin-header">
+    <h1 class="admin-title">Add New Category</h1>
+    <div class="admin-nav">
+      <%= link_to "← Back to Categories", admin_categories_path, class: "admin-nav-link" %>
     </div>
-<% end %>
+  </div>
 
-<div style="margin-bottom: 15px;">
-    <%= form.label :name, style: "display: block; font-weight: bold;
-margin-bottom: 5px;" %>
-    <%= form.text_field :name, style: "width: 100%; padding: 8px; border:
-1px solid #ccc;" %>
-</div>
+  <div class="admin-form-container">
+    <%= form_with(model: [:admin, @category], local: true, class: "admin-form") do |form| %>
+      <% if @category.errors.any? %>
+        <div class="form-errors">
+          <h4><%= pluralize(@category.errors.count, "error") %> prevented this category from being saved:</h4>
+          <ul>
+            <% @category.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-<div style="margin-bottom: 15px;">
-    <%= form.label :description, style: "display: block; font-weight:
-bold; margin-bottom: 5px;" %>
-    <%= form.text_area :description, rows: 4, style: "width: 100%;
-padding: 8px; border: 1px solid #ccc;" %>
-</div>
+      <div class="form-group">
+        <%= form.label :name, "Category Name", class: "form-label" %>
+        <%= form.text_field :name, class: "form-input", placeholder: "e.g., Furniture, Jewelry, Books..." %>
+      </div>
 
-<div style="margin-top: 20px;">
-    <%= form.submit "Create Category", style: "background-color: #28a745;
-color: white; padding: 10px 20px; border: none; border-radius: 5px;
-cursor: pointer;" %>
-    <%= link_to "Cancel", admin_categories_path, style: "margin-left:
-10px; color: #6c757d;" %>
+      <div class="form-group">
+        <%= form.label :description, class: "form-label" %>
+        <%= form.text_area :description, rows: 4, class: "form-textarea", placeholder: "Brief description of this category..." %>
+      </div>
+
+      <div class="form-actions">
+        <%= form.submit "Create Category", class: "admin-btn-primary" %>
+        <%= link_to "Cancel", admin_categories_path, class: "admin-btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
 </div>
-<% end %>

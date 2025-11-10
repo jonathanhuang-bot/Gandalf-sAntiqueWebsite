@@ -23,19 +23,6 @@
   </head>
 
   <body>
-    <header style="background-color: #f8f9fa; padding: 20px; border-bottom: 2px solid #dee2e6; margin-bottom: 20px;">
-      <div style="max-width: 1200px; margin: 0 auto;">
-        <h1 style="margin: 0; display: inline-block;">
-          <%= link_to "Antique Shop", "/", style: "text-decoration: none; color: #333;" %>
-        </h1>
-        
-        <nav style="float: right; margin-top: 5px;">
-          <%= link_to "Categories", "/categories", style: "margin-right: 20px; color: #007bff; text-decoration: none;" %>
-          <%= link_to "All Items", "/items", style: "color: #007bff; text-decoration: none;" %>
-        </nav>
-        <div style="clear: both;"></div>
-      </div>
-    </header>
     <%= yield %>
   </body>
 </html>

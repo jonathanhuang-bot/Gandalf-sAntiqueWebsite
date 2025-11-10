@@ -1,44 +1,42 @@
-<h1>Admin - Manage Categories</h1>
+<div class="admin-page">
+  <div class="admin-header">
+    <h1 class="admin-title">Manage Categories</h1>
+    <div class="admin-nav">
+      <%= link_to "Manage Items", admin_items_path, class: "admin-nav-link" %>
+      <%= link_to "View Site", "/", class: "admin-nav-link" %>
+    </div>
+  </div>
 
-<div style="margin-bottom: 20px;">
-<%= link_to "Add New Category", new_admin_category_path, style:
-"background-color: #28a745; color: white; padding: 10px 20px;
-text-decoration: none; border-radius: 5px;" %>
+  <div class="admin-actions">
+    <%= link_to "+ Add New Category", new_admin_category_path, class: "admin-btn-primary" %>
+  </div>
+
+  <div class="admin-table-container">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Items Count</th>
+          <th class="actions-column">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @categories.each do |category| %>
+          <tr>
+            <td class="item-name-cell"><%= category.name %></td>
+            <td><%= truncate(category.description, length: 80) %></td>
+            <td><%= category.items.count %></td>
+            <td class="actions-cell">
+              <%= link_to "View", admin_category_path(category), class: "action-link" %>
+              <%= link_to "Edit", edit_admin_category_path(category), class: "action-link" %>
+              <%= link_to "Delete", admin_category_path(category),
+                  data: { "turbo-method": :delete, "turbo-confirm": "Are you sure? This will delete all items in this category!" },
+                  class: "action-link action-delete" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
-
-<table style="width: 100%; border-collapse: collapse;">
-<thead>
-    <tr style="background-color: #f8f9fa;">
-    <th style="border: 1px solid #ddd; padding: 12px; text-align:
-left;">Name</th>
-    <th style="border: 1px solid #ddd; padding: 12px; text-align:
-left;">Description</th>
-    <th style="border: 1px solid #ddd; padding: 12px; text-align:
-left;">Items Count</th>
-    <th style="border: 1px solid #ddd; padding: 12px; text-align:
-left;">Actions</th>
-    </tr>
-</thead>
-<tbody>
-    <% @categories.each do |category| %>
-    <tr>
-        <td style="border: 1px solid #ddd; padding: 12px;"><%=
-category.name %></td>
-        <td style="border: 1px solid #ddd; padding: 12px;"><%=
-truncate(category.description, length: 50) %></td>
-        <td style="border: 1px solid #ddd; padding: 12px;"><%=
-category.items.count %></td>
-        <td style="border: 1px solid #ddd; padding: 12px;">
-        <%= link_to "View", admin_category_path(category), style:
-"color: #007bff; margin-right: 10px;" %>
-        <%= link_to "Edit", edit_admin_category_path(category), style:
-"color: #ffc107; margin-right: 10px;" %>
-        <%= link_to "Delete", admin_category_path(category), method:
-:delete,
-                    confirm: "Are you sure? This will delete all items
-in this category!", style: "color: #dc3545;" %>
-        </td>
-    </tr>
-    <% end %>
-</tbody>
-</table>

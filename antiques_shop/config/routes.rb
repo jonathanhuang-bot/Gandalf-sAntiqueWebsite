@@ -1,13 +1,12 @@
 Rails.application.routes.draw do
-  #Categories
-  get '/categories', to: 'categories#index'
-  get '/categories/:id', to: 'categories#show'
-  #Items
-  get '/items', to: 'items#index'
-  get '/items/:id', to: 'items#show'
-  #Homepage
+  # Homepage
   root 'categories#index'
 
+  # Public routes
+  resources :categories, only: [:index, :show]
+  resources :items, only: [:index, :show]
+
+  # Admin routes
   namespace :admin do
     resources :items
     resources :categories
